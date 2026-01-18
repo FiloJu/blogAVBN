@@ -1,6 +1,7 @@
 <?php
 
-function getPosts() {
+function getPosts()
+{
     $database = dbConnect();
     $statement = $database->query(
         "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date FROM posts ORDER BY creation_date DESC LIMIT 0, 5"
@@ -20,7 +21,8 @@ function getPosts() {
     return $posts;
 }
 
-function getPost($identifier) {
+function getPost($identifier)
+{
     $database = dbConnect();
     $statement = $database->prepare(
         "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date FROM posts WHERE id = ?"
@@ -40,11 +42,7 @@ function getPost($identifier) {
 
 function dbConnect()
 {
-    try {
-        $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', 'root');
+    $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', 'root');
 
-        return $database;
-    } catch(Exception $e) {
-        die('Erreur : '.$e->getMessage());
-    }
+    return $database;
 }
